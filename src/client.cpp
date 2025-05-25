@@ -1,8 +1,4 @@
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h>
-#include <iostream>
-#include <cstring>
+#include "utils.hpp"
 
 int main(void) {
     int kiriko = socket(AF_INET, SOCK_STREAM, 0) ;
@@ -13,7 +9,10 @@ int main(void) {
     sAddr.sin_addr.s_addr = INADDR_ANY ;
     connect(kiriko, (struct sockaddr*) &sAddr, sizeof(sAddr)) ;
 
-    const char* msg = "Let the kitsune guide you!" ;
+    char msg[256] ;
+    std::cout << "Enter a message: " ;
+    std::cin.getline(msg, 256) ;
+    
     send(kiriko, msg, strlen(msg), 0) ;
 
     close(kiriko) ;
